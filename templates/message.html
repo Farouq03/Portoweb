@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Guest Book{% endblock %}
+
+{% block content %}
+<section id="message-us-page" class="w-full flex flex-col lg:flex-row gap-10 max-w-5xl mx-auto py-8 px-4 items-start">
+    <!-- Message Form -->
+    <div class="w-full lg:w-1/2 bg-white p-6 md:p-8 rounded-xl border border-zinc-200 shadow-2xs">
+        <h2 class="text-xl sm:text-2xl font-semibold text-zinc-900 mb-1">Guest Book</h2>
+        <p class="text-zinc-500 text-sm mb-6">Kirimkan pesan, pertanyaan, atau testimoni untuk buku tamu kami.</p>
+
+        <form class="flex flex-col gap-4">
+            <div>
+                <label for="Nama" class="block text-xs font-semibold text-zinc-500 mb-1 uppercase tracking-wide">Nama</label>
+                <input id="Nama"
+                    class="w-full border border-zinc-200 p-2.5 rounded-lg text-sm bg-zinc-50/50 focus:bg-white focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 outline-none transition-all duration-200"
+                    type="text" name="Nama" placeholder="Masukan nama anda disini" required>
+            </div>
+
+            <div>
+                <label for="Email" class="block text-xs font-semibold text-zinc-500 mb-1 uppercase tracking-wide">Email</label>
+                <input id="Email"
+                    class="w-full border border-zinc-200 p-2.5 rounded-lg text-sm bg-zinc-50/50 focus:bg-white focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 outline-none transition-all duration-200"
+                    type="email" name="Email" placeholder="Masukan email anda disini" required>
+            </div>
+
+            <div>
+                <label for="No_Telepon" class="block text-xs font-semibold text-zinc-500 mb-1 uppercase tracking-wide">No Telepon</label>
+                <input id="No_Telepon"
+                    class="w-full border border-zinc-200 p-2.5 rounded-lg text-sm bg-zinc-50/50 focus:bg-white focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 outline-none transition-all duration-200"
+                    type="number" name="No_Telepon" placeholder="Masukan no telepon anda disini">
+            </div>
+
+            <div>
+                <label for="Pesan" class="block text-xs font-semibold text-zinc-500 mb-1 uppercase tracking-wide">Pesan</label>
+                <textarea id="Pesan"
+                    class="w-full border border-zinc-200 p-2.5 rounded-lg text-sm bg-zinc-50/50 focus:bg-white focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 outline-none transition-all duration-200"
+                    rows="4" placeholder="Masukan pesan anda disini" required></textarea>
+            </div>
+
+            <button
+                class="w-full bg-zinc-900 hover:bg-zinc-800 text-white font-medium py-3 rounded-lg transition-colors cursor-pointer text-sm shadow-xs"
+                type="button" onclick="submitForm()">Submit</button>
+        </form>
+    </div>
+
+    <!-- Live Guestbook List -->
+    <div
+        class="w-full lg:w-1/2 border border-zinc-200 p-6 md:p-8 rounded-xl bg-white flex flex-col max-h-[620px] overflow-y-auto shadow-2xs">
+        <h3 class="text-lg font-semibold border-b border-zinc-100 pb-4 text-zinc-900 flex justify-between items-center">
+            <span>Guestbook Messages</span>
+            <span
+                class="text-[10px] bg-zinc-100 text-zinc-700 px-2 py-0.5 rounded font-mono uppercase tracking-wider font-semibold">Live DB</span>
+        </h3>
+        <div id="messages-list" class="mt-4 flex flex-col gap-4">
+            <p class="text-zinc-400 italic text-center py-6 text-sm">Memuat pesan...</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

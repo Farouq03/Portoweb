@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Portfolio Manager</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-zinc-50 text-zinc-900 min-h-screen antialiased">
+
+    <!-- Auth Container (Login) -->
+    <div id="login-container" class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white p-8 rounded-xl border border-zinc-200 max-w-sm w-full shadow-2xs">
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 bg-zinc-100 text-zinc-600 rounded-lg flex items-center justify-center mx-auto mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                </div>
+                <h2 class="text-xl font-semibold text-zinc-900">Admin Login</h2>
+                <p class="text-zinc-500 text-xs mt-1">Masukkan passcode untuk mengelola portofolio</p>
+            </div>
+            <form onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label for="passcode" class="block text-xs font-semibold text-zinc-500 mb-1 uppercase tracking-wide">Passcode</label>
+                    <input id="passcode" type="password" placeholder="••••••••" class="w-full border border-zinc-200 p-2.5 rounded-lg text-sm bg-zinc-50/50 focus:bg-white focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 outline-none transition-all duration-200" required>
+                </div>
+                <button type="submit" class="w-full bg-zinc-900 hover:bg-zinc-800 text-white font-medium py-2.5 rounded-lg transition-colors cursor-pointer text-sm shadow-xs">Masuk</button>
+            </form>
+            <div class="text-center mt-4">
+                <a href="/" class="text-xs text-zinc-400 hover:text-zinc-600 transition-colors">Kembali ke Beranda</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Dashboard Container (Hidden by default) -->
+    <div id="dashboard-container" class="hidden min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-zinc-200 py-3.5 px-6 md:px-8 flex justify-between items-center shadow-xs">
+            <div class="flex items-center gap-3">
+                <span class="bg-emerald-500 w-2 h-2 rounded-full animate-pulse"></span>
+                <h1 class="text-base font-semibold text-zinc-900 tracking-tight">Admin Dashboard</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="/" target="_blank" class="text-zinc-400 hover:text-zinc-900 transition-colors text-xs font-medium flex items-center gap-1.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                    Lihat Web
+                </a>
+                <button onclick="handleLogout()" class="bg-zinc-100 hover:bg-zinc-200 text-zinc-600 font-medium py-2 px-4 rounded-lg text-xs transition-colors cursor-pointer border border-zinc-200">Logout</button>
+            </div>
+        </header>
+
+        <!-- Main Body -->
+        <div class="flex flex-1 flex-col md:flex-row">
+            <!-- Sidebar Navigation -->
+            <nav class="w-full md:w-56 bg-white border-r border-zinc-200 p-3 space-y-1 shrink-0">
+                <button onclick="switchTab('profile')" id="tab-btn-profile" class="w-full text-left p-2.5 rounded-lg flex items-center gap-2.5 text-sm font-medium transition-all text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                    Konten Profil
+                </button>
+                <button onclick="switchTab('projects')" id="tab-btn-projects" class="w-full text-left p-2.5 rounded-lg flex items-center gap-2.5 text-sm font-medium transition-all bg-zinc-900 text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                    Proyek Portofolio
+                </button>
+                <button onclick="switchTab('skills')" id="tab-btn-skills" class="w-full text-left p-2.5 rounded-lg flex items-center gap-2.5 text-sm font-medium transition-all text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    Keahlian (Skills)
+                </button>
+                <button onclick="switchTab('messages')" id="tab-btn-messages" class="w-full text-left p-2.5 rounded-lg flex items-center gap-2.5 text-sm font-medium transition-all text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
+                    Pesan Pengunjung
+                </button>
+            </nav>
+
+            <!-- Content Area -->
+            <main class="flex-1 p-6 md:p-8 bg-zinc-50/50">
+
+                <!-- TAB: PROFILE -->
+                <section id="tab-profile" class="hidden space-y-6">
+                    <div>
+                        <h2 class="text-xl font-semibold text-zinc-900">Deskripsi Profil (About Me)</h2>
+                        <p class="text-zinc-500 text-xs mt-0.5">Edit deskripsi teks yang tampil di halaman profil website Anda.</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl border border-zinc-200 shadow-2xs max-w-2xl">
+                        <form id="profile-form" onsubmit="handleProfileSubmit(event)" class="space-y-4">
+                            <div>
+                                <label for="profile-desc" class="block text-xs font-semibold text-zinc-500 mb-1 uppercase tracking-wide">Deskripsi Profil</label>
+                                <textarea id="profile-desc" rows="6" class="w-full border border-zinc-200 p-2.5 rounded-lg text-sm bg-zinc-50/50 focus:bg-white focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 outline-none transition-all duration-200" required></textarea>
+                            </div>
+                            <button type="submit" class="bg-zinc-900 hover:bg-zinc-800 text-white font-medium py-2.5 px-5 rounded-lg transition-colors cursor-pointer text-sm shadow-xs">Simpan Perubahan</button>
+                        </form>
+                    </div>
+                </section>
+                
+                <!-- TAB: PROJECTS -->
+                <section id="tab-projects" class="space-y-6">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-zinc-200 pb-4 gap-4">
+                        <div>
+                            <h2 class="text-xl font-semibold text-zinc-900">Manajemen Proyek Portofolio</h2>
+                            <p class="text-zinc-500 text-xs mt-0.5">Tambahkan, edit, atau hapus proyek dari halaman utama Anda.</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <!-- Project Form -->
+                        <div class="bg-white p-6 rounded-xl border border-zinc-200 shadow-2xs h-fit space-y-4">
+                            <h3 id="project-form-title" class="text-sm font-semibold text-zinc-900 border-b border-zinc-100 pb-2">Tambah Proyek Baru</h3>
+                            <form id="project-form" onsubmit="handleProjectSubmit(event)" class="space-y-4">
+                                <div>
+                                    <label for="project-title" class="block text-xs font-semibold text-zinc-500 mb-1 uppercase tracking-wide">Judul Proyek</label>
+                                    <input id="project-title" type="text" class="w-full border border-zinc-200 p-2.5 rounded-lg text-sm bg-zinc-50/50 focus:bg-white focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 outline-none transition-all duration-200" required>
+                                </div>
+                                <div>
+                                    <label for="project-desc" class="block text-xs font-semibold text-zinc-500 mb-1 uppercase tracking-wide">Deskripsi Proyek</label>
+                                    <textarea id="project-desc" rows="3" class="w-full border border-zinc-200 p-2.5 rounded-lg text-sm bg-zinc-50/50 focus:bg-white focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 outline-none transition-all duration-200" required></textarea>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-zinc-500 mb-1 uppercase tracking-wide">Gambar Proyek</label>
+                                    <div class="border border-dashed border-zinc-300 rounded-lg p-4 text-center hover:bg-zinc-50 transition-colors relative cursor-pointer">
+                                        <input type="file" id="project-image-file" accept="image/*" onchange="uploadImage(event)" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                                        <div id="upload-placeholder" class="space-y-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-8 w-8 text-zinc-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                                            <p class="text-xs font-medium text-zinc-500">Klik untuk upload gambar</p>
+                                            <p class="text-[10px] text-zinc-400">PNG, JPG, JPEG, atau WEBP</p>
+                                        </div>
+                                        <div id="upload-preview-container" class="hidden">
+                                            <img id="upload-preview" src="#" alt="Preview" class="max-h-32 mx-auto rounded object-cover border border-zinc-100">
+                                            <p class="text-[10px] text-emerald-600 mt-2 font-medium">Gambar berhasil terunggah!</p>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="project-image-url" required>
+                                </div>
+                                <div>
+                                    <label for="project-github" class="block text-xs font-semibold text-zinc-500 mb-1 uppercase tracking-wide">GitHub URL (Opsional)</label>
+                                    <input id="project-github" type="url" class="w-full border border-zinc-200 p-2.5 rounded-lg text-sm bg-zinc-50/50 focus:bg-white focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 outline-none transition-all duration-200">
+                                </div>
+                                <div class="flex gap-2">
+                                    <button type="submit" id="project-submit-btn" class="flex-1 bg-zinc-900 hover:bg-zinc-800 text-white font-medium py-2.5 rounded-lg transition-colors cursor-pointer text-sm shadow-xs">Simpan Proyek</button>
+                                    <button type="button" id="project-cancel-btn" onclick="resetProjectForm()" class="hidden bg-zinc-100 hover:bg-zinc-200 text-zinc-600 font-medium py-2.5 px-4 rounded-lg transition-colors cursor-pointer text-sm border border-zinc-200">Batal</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Projects List -->
+                        <div class="bg-white p-6 rounded-xl border border-zinc-200 shadow-2xs lg:col-span-2">
+                            <h3 class="text-sm font-semibold text-zinc-900 border-b border-zinc-100 pb-2 mb-4">Daftar Proyek Portofolio</h3>
+                            <div id="admin-projects-list" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <!-- Dynamic Render -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB: SKILLS -->
+                <section id="tab-skills" class="hidden space-y-6">
+                    <div>
+                        <h2 class="text-xl font-semibold text-zinc-900">Manajemen Keahlian & Resume</h2>
+                        <p class="text-zinc-500 text-xs mt-0.5">Kelola daftar keahlian teknis (Technical Skills) dan sosial (Soft Skills) Anda.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <!-- Skill Form -->
+                        <div class="bg-white p-6 rounded-xl border border-zinc-200 shadow-2xs h-fit space-y-4">
+                            <h3 class="text-sm font-semibold text-zinc-900 border-b border-zinc-100 pb-2">Tambah Keahlian Baru</h3>
+                            <form onsubmit="handleSkillSubmit(event)" class="space-y-4">
+                                <div>
+                                    <label for="skill-category" class="block text-xs font-semibold text-zinc-500 mb-1 uppercase tracking-wide">Kategori Skill</label>
+                                    <select id="skill-category" class="w-full border border-zinc-200 p-2.5 rounded-lg text-sm bg-zinc-50/50 focus:bg-white focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 outline-none transition-all duration-200" required>
+                                        <option value="Technical">Technical Skill (Teknis)</option>
+                                        <option value="Soft">Soft Skill (Sosial/Interpersonal)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="skill-name" class="block text-xs font-semibold text-zinc-500 mb-1 uppercase tracking-wide">Nama Keahlian</label>
+                                    <input id="skill-name" type="text" placeholder="Misal: Python, Teamwork" class="w-full border border-zinc-200 p-2.5 rounded-lg text-sm bg-zinc-50/50 focus:bg-white focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 outline-none transition-all duration-200" required>
+                                </div>
+                                <button type="submit" class="w-full bg-zinc-900 hover:bg-zinc-800 text-white font-medium py-2.5 rounded-lg transition-colors cursor-pointer text-sm shadow-xs">Tambahkan Skill</button>
+                            </form>
+                        </div>
+
+                        <!-- Skills List (Divided by categories) -->
+                        <div class="lg:col-span-2 space-y-6">
+                            <!-- Technical -->
+                            <div class="bg-white p-6 rounded-xl border border-zinc-200 shadow-2xs">
+                                <h3 class="text-sm font-semibold text-zinc-900 border-b border-zinc-100 pb-2 mb-4 flex items-center gap-2">
+                                    <span class="w-2 h-2 bg-zinc-400 rounded-full"></span>
+                                    Technical Skills
+                                </h3>
+                                <div id="admin-skills-technical" class="flex flex-wrap gap-2">
+                                    <!-- Dynamic -->
+                                </div>
+                            </div>
+
+                            <!-- Soft -->
+                            <div class="bg-white p-6 rounded-xl border border-zinc-200 shadow-2xs">
+                                <h3 class="text-sm font-semibold text-zinc-900 border-b border-zinc-100 pb-2 mb-4 flex items-center gap-2">
+                                    <span class="w-2 h-2 bg-zinc-400 rounded-full"></span>
+                                    Soft Skills
+                                </h3>
+                                <div id="admin-skills-soft" class="flex flex-wrap gap-2">
+                                    <!-- Dynamic -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB: MESSAGES -->
+                <section id="tab-messages" class="hidden space-y-6">
+                    <div>
+                        <h2 class="text-xl font-semibold text-zinc-900">Daftar Pesan Pengunjung (Buku Tamu)</h2>
+                        <p class="text-zinc-500 text-xs mt-0.5">Lihat dan kelola masukan pesan dari formulir kontak Anda.</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl border border-zinc-200 shadow-2xs">
+                        <div id="admin-messages-list" class="flex flex-col gap-4 max-h-[700px] overflow-y-auto pr-2">
+                            <!-- Dynamic -->
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- JS Core -->
+    <script src="/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}My Portfolio - Farouq's Projects{% endblock %}
+
+{% block content %}
+<section id="portfolio-page" class="w-full flex flex-col items-center py-8 px-4 max-w-5xl mx-auto">
+    <div class="w-full text-center mb-8">
+        <h2 class="text-2xl sm:text-3xl font-semibold text-zinc-900 tracking-tight mb-2">My Portfolio</h2>
+        <p class="text-zinc-500 text-sm">Here are some of my projects, loaded dynamically from the database.</p>
+    </div>
+    
+    <div id="projects-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
+        <p class="text-zinc-400 italic py-12 col-span-full text-center text-sm">Memuat daftar proyek...</p>
+    </div>
+</section>
+{% endblock %}

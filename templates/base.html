@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Website{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-zinc-50 text-zinc-900 min-h-screen flex flex-col justify-between antialiased">
+
+    <!-- Header -->
+    <header class="main-header bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-zinc-200 py-3.5 px-6 md:px-12 flex justify-between items-center shadow-xs">
+        <!-- Logo -->
+        <a href="/" class="flex items-center" aria-label="Home">
+            <div class="logo"></div>
+        </a>
+
+        <!-- Navigation bar -->
+        <nav class="flex flex-row gap-6 md:gap-8 items-center">
+            <a class="nav-link text-sm font-medium" href="/">Home</a>
+            <a class="nav-link text-sm font-medium" href="/profile">Profile</a>
+            <a class="nav-link text-sm font-medium" href="/portfolio">Portfolio</a>
+            <a class="nav-link text-sm font-medium" href="/message">Guest Book</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content flex-grow flex flex-col justify-center py-8 px-4 sm:px-6 md:px-12">
+        <div class="w-full max-w-5xl mx-auto flex-grow flex flex-col justify-center">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-zinc-200 bg-white mt-auto py-5 px-6 md:px-12">
+        <div class="w-full max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3 text-zinc-400 text-xs">
+            <p>&copy; 2025 Farouq's Website. All rights reserved.</p>
+            <a href="/admin" class="hover:text-zinc-600 transition-colors font-medium">Admin Panel</a>
+        </div>
+    </footer>
+
+    <!-- Js external file -->
+    <script src="/js/script.js"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

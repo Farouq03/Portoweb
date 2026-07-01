@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome - Farouq's Portfolio{% endblock %}
+
+{% block content %}
+<section id="home-page" class="flex flex-col items-center justify-center text-center py-12 px-4 max-w-3xl mx-auto">
+    <h2 id="welcome-message" class="text-3xl sm:text-4xl font-semibold text-zinc-900 tracking-tight leading-tight">
+        Hi, welcome to my website
+    </h2>
+    <p class="mt-4 text-zinc-500 text-base sm:text-lg leading-relaxed font-normal">
+        Welcome to my portfolio website. Here, you can explore my projects, discover my design and development journey, and see how I turn ideas into real, functional results. Feel free to browse through my works and get a closer look at what I create!
+    </p>
+    <div class="mt-8 flex flex-row gap-4 items-center justify-center">
+        <a href="/portfolio" class="px-5 py-2.5 text-sm font-medium text-white bg-zinc-900 hover:bg-zinc-800 rounded-lg transition-colors shadow-xs">
+            View My Portfolio
+        </a>
+        <a href="/profile" class="px-5 py-2.5 text-sm font-medium text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 rounded-lg transition-colors">
+            About Me
+        </a>
+    </div>
+</section>
+{% endblock %}

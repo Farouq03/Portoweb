@@ -1,0 +1,88 @@
+/* Minimalist styling overrides */
+
+:root {
+    --transition-speed: 0.2s;
+}
+
+body {
+    background-color: #fafafa;
+    color: #1c1917; /* zinc-900 */
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Custom minimal scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: #e4e4e7; /* zinc-200 */
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #d4d4d8; /* zinc-300 */
+}
+
+/* Logo redesign */
+.logo {
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
+    background-image: url(https://avatars.githubusercontent.com/u/109473655?s=400&u=8e12ba95caf491d5ba4051e9436c78cd56de8528&v=4);
+    background-size: cover;
+    background-position: center;
+    border: 1px solid #e4e4e7; /* zinc-200 */
+    transition: transform var(--transition-speed) ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+/* Header layout rules */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all var(--transition-speed) ease;
+}
+
+.main-content {
+    min-height: calc(100vh - 180px);
+}
+
+/* Understated Navigation Link underline effect */
+.nav-link {
+    position: relative;
+    color: #52525b; /* zinc-600 */
+    transition: color var(--transition-speed) ease;
+}
+
+.nav-link:hover {
+    color: #09090b; /* zinc-950 */
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: -2px;
+    left: 0;
+    background-color: #09090b;
+    transition: width var(--transition-speed) ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+.nav-link.active {
+    color: #09090b;
+    font-weight: 500;
+}
