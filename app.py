@@ -21,14 +21,15 @@ if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
 # Simple passcode for admin validation
-ADMIN_PASSCODE = "admin123"
+ADMIN_PASSCODE = os.getenv('ADMIN_PASSCODE')
 
-# Database configuration (MySQL/XAMPP default)
+# Database configuration (supports local XAMPP and Docker containers)
 DB_CONFIG = {
-    'host': 'localhost',
-    'user': 'root',
-    'password': '', 
-    'database': 'portodb'
+    'host': os.getenv('DB_HOST'),
+    'port': int(os.getenv('DB_PORT')),
+    'user': os.getenv('DB_USER'),
+    'password': os.getenv('DB_PASSWORD'),
+    'database': os.getenv('DB_NAME')
 }
 
 def get_db_connection():
@@ -587,5 +588,8 @@ def delete_skill(skill_id):
 
 
 if __name__ == '__main__':
-    # Run server on port 5000
-    app.run(debug=True, port=5000)
+    app.run(
+        host=os.getenv('HOST', '0.0.0.0'),
+        port=5000,
+        debug=os.getenv('FLASK_DEBUG', 'false').lower() == 'true'
+    )
