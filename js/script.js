@@ -10,7 +10,7 @@ if (window.location.pathname === "/") {
 }
 
 // API Configuration
-const API_URL = "http://127.0.0.1:5000/api/messages";
+const API_URL = "/api/messages";
 
 // Form elements (Might be null depending on page)
 const formNama = document.getElementById("Nama");
@@ -59,7 +59,7 @@ async function fetchProfileContent() {
     if (!descEl) return;
 
     try {
-        const response = await fetch("http://127.0.0.1:5000/api/profile-content");
+        const response = await fetch("/api/profile-content");
         if (!response.ok) throw new Error("Gagal mengambil data profil");
         const data = await response.json();
 
@@ -264,7 +264,7 @@ async function fetchProjects() {
     if (!container) return;
 
     try {
-        const response = await fetch("http://127.0.0.1:5000/api/projects");
+        const response = await fetch("/api/projects");
         if (!response.ok) throw new Error("Gagal mengambil data proyek");
         const projects = await response.json();
 
@@ -310,7 +310,7 @@ async function fetchSkills() {
     if (!techContainer || !softContainer) return;
 
     try {
-        const response = await fetch("http://127.0.0.1:5000/api/skills");
+        const response = await fetch("/api/skills");
         if (!response.ok) throw new Error("Gagal mengambil data keahlian");
         const skills = await response.json();
 
